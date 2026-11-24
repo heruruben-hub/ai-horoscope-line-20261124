@@ -19,16 +19,31 @@ HOROSCOPE = (
 )
 
 
-def validate(text: str) -> None:
-    """Check the horoscope against the competition gate."""
+def _check_not_blank(text: str) -> None:
+    """Gate: the horoscope must contain non-whitespace text."""
     if not text or not text.strip():
         raise ValueError("horoscope must not be empty or only whitespace")
+
+
+def _check_single_line(text: str) -> None:
+    """Gate: the horoscope must be exactly one line."""
     if "\n" in text or "\r" in text:
         raise ValueError("horoscope must be a single line")
+
+
+def _check_length(text: str) -> None:
+    """Gate: the horoscope must fit within 200 characters."""
     if len(text) > 200:
         raise ValueError(
             f"horoscope is {len(text)} characters, over the 200 limit"
         )
+
+
+def validate(text: str) -> None:
+    """Check the horoscope against the competition gate."""
+    _check_not_blank(text)
+    _check_single_line(text)
+    _check_length(text)
 
 
 def main() -> int:
